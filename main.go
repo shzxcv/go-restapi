@@ -10,13 +10,13 @@ import (
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/hello", handler.HelloHandler)
-	r.HandleFunc("/article", handler.PostArticleHandler)
-	r.HandleFunc("/article/list", handler.ArticleListHandler)
-	r.HandleFunc("/article/1", handler.ArticleDetailHandler)
-	r.HandleFunc("/article/nice", handler.PostNiceHandler)
-	r.HandleFunc("/comment", handler.PostCommentHandler)
+	r.HandleFunc("/hello", handler.HelloHandler).Methods(http.MethodGet)
+	r.HandleFunc("/article", handler.PostArticleHandler).Methods(http.MethodPost)
+	r.HandleFunc("/article/list", handler.ArticleListHandler).Methods(http.MethodGet)
+	r.HandleFunc("/article/1", handler.ArticleDetailHandler).Methods(http.MethodGet)
+	r.HandleFunc("/article/nice", handler.PostNiceHandler).Methods(http.MethodPost)
+	r.HandleFunc("/comment", handler.PostCommentHandler).Methods(http.MethodPost)
 
 	log.Println("server start at port 8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8080", r))
 }
